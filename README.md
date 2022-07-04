@@ -87,6 +87,52 @@ We can also request JSON with username by using ```localhost:8000/greet?name=joh
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177057848-8ff9040c-0e47-4b3d-a2fd-03d853da12bf.png">
 
+## Database setup
+
+### 1. sqlalchemy
+
+[SQLAlchemy](https://sqlalchemy.org/) is a library that facilitates the communication between Python programs and databases. Most of the times, this library is used as an Object Relational Mapper (ORM) tool that translates Python classes to tables on relational databases and automatically converts function calls to SQL statements.
+
+```
+pip3 install sqlalchemy
+```
+
+### 2. psycopg2-binary
+
+[Psycopg](https://pypi.org/project/psycopg2-binary/) is the most popular PostgreSQL database adapter for the Python programming language. Its main features are the complete implementation of the Python DB API 2.0 specification and the thread safety (several threads can share the same connection).
+
+```
+pip3 install psycopg2-binary
+```
+
+### 3. Install postgresql
+
+[PostgreSQL](https://www.postgresql.org/) is used as the primary data store or data warehouse for many web, mobile, geospatial, and analytics applications. Postgres offers a wider variety of data types than MySQL. If your application deals with any of the unique data types it has available, or unstructured data, PostgreSQL may be a better pick. If you're using only basic character and numeric data types, both databases will suit you.
+
+Download installation file and follow instruction on the [webpage](https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-macos/). 
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177076183-a666502d-e577-4b9c-bae7-c2be5b275a79.png">
+
+### 4. Add database
+
+Create ```item_db``` database with ```pgAdmin```.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177076548-fd7d5425-6d24-49fb-bb48-6c43a23aaeaf.png">
+
+After that, make a ```database.py``` like below.
+
+```python
+from sqlalchemy.orm import declarative_base, sessionmaker
+from sqlalchemy import create_engine
+
+engine = create_engine("postgresql://postgres:sehwan@localhost/item_db",
+  echo = True
+)
+
+Base = declarative_base()
+
+SessionLocal = sessionmaker(bind=engine)
+```
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
