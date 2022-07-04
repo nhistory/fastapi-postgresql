@@ -4,6 +4,7 @@
 An API 
 - Setted python virtual environment to make independent environment for development.
 - Developed with minimal low-level web server able to use all async frameworks.
+- Import sqlalchemy, psycopg2-binary to use postgresql.
 
 ## Initialize project
 
@@ -125,7 +126,7 @@ After that, make a ```database.py``` like below.
 from sqlalchemy.orm import declarative_base, sessionmaker
 from sqlalchemy import create_engine
 
-engine = create_engine("postgresql://postgres:sehwan@localhost/item_db",
+engine = create_engine("postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}",
   echo = True
 )
 
@@ -133,6 +134,47 @@ Base = declarative_base()
 
 SessionLocal = sessionmaker(bind=engine)
 ```
+
+### 5. Create Models
+
+In order to communicate with FastApi and postgresql, ```model``` should be made which is connected with ```Item``` class inside of ```main.py```.
+
+models.py
+```python
+from database import Base
+from sqlalchemy import String, Boolean, Integer, Column, Text
+
+class Item(Base):
+  __tablename__ = 'items'
+  id = Column(Integer, primary_key = True)
+  name = Column(String(255), nullable = False, unique = True)
+  description = Column(Text)
+  price = Column(Integer, nullable = False)
+  on_offer = Column(Boolean, default = False)
+```
+
+And you can check this model is working on the python3 environment.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177079442-c0a02474-a1de-4b5c-ae07-fca68d3d40d3.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177079477-8090f584-8556-4c1a-ab12-53569bdf5bdf.png">
+
+### 6. Create database
+
+Make ```create_db.py``` like below.
+
+```python
+from database import Base, engine
+from models import Item
+
+print("Creating database ....")
+
+Base.metadata.create_all(engine)
+```
+
+And enter ```python3 create_db.py``` command, then you can see created database table.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177081902-e2d64d97-dbff-45bd-848c-e8242545758d.png">
+
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
