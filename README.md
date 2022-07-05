@@ -186,7 +186,6 @@ Now, we can build up api setup with postgresql on the ```main.py```.
 ### 1. Get all items
 
 main.py
-
 ```python
 from fastapi import FastAPI
 from pydantic import BaseModel
@@ -202,6 +201,10 @@ def get_all_items():
 
   return items
 ```
+
+You can try to check ```localhost:8000/items``` with httpie. The result is like below.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177228987-7dbfb62e-1178-49c0-9caf-36ba2e4918b2.png">
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
