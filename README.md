@@ -206,6 +206,34 @@ You can try to check ```localhost:8000/items``` with httpie. The result is like 
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177228987-7dbfb62e-1178-49c0-9caf-36ba2e4918b2.png">
 
+### 2. Post item
+
+main.py
+```python
+from fastapi import FastAPI, status
+
+@app.post('/items', response_model=Item, status_code=status.HTTP_201_CREATED)
+def create_an_item(item:Item):
+  new_item=models.Item(
+    name=item.name,
+    price=item.price,
+    description=item.description,
+    on_offer=item.on_offer
+  )
+
+  db.add(new_item)
+  db.commit()
+
+  return new_item
+```
+
+As you can see, ```@app.post``` make ```create``` funtion with ```response_model``` and ```status_code```. In FatsApi, we can use customized HTTP status code with ```fastapi.status```. For doing this, ```status``` should be imported on ```main.py```.
+
+We can test ```post``` method like below.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/178636268-357fba93-2914-4674-aefe-f37a66354643.png">
+
+
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
 - https://www.uvicorn.org/
