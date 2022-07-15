@@ -233,6 +233,36 @@ We can test ```post``` method like below.
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/178636268-357fba93-2914-4674-aefe-f37a66354643.png">
 
+If you want to use ```HTTPException``` method inside of ```FastAPI```, these code should be added on ```create_an_item``` function.
+
+```
+from fastapi import FastAPI, status, HTTPException
+
+@app.post('/items', response_model=Item, status_code=status.HTTP_201_CREATED)
+def create_an_item(item:Item):
+  new_item=models.Item(
+    name=item.name,
+    price=item.price,
+    description=item.description,
+    on_offer=item.on_offer
+  )
+
+  # HTTP Exception setting
+  db_item = db.query(models.Item).filter(item.name==new_item.name).first()
+
+  if db_item is not None:
+    raise HTTPException(status_code=400, detail="Item already exists")
+
+  db.add(new_item)
+  db.commit()
+
+  return new_item
+```
+
+After that, we can see warning message like below if any exist item try to be created.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179121099-910a3170-c4e3-4fae-b0e5-a94dfca7679f.png">
+
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
