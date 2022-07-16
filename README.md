@@ -277,6 +277,22 @@ We can get the specific item with item_id on the httpie.
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179334779-f6bc7f4f-8a51-4da1-aab1-77ac83ef7e56.png">
 
+### 4. Update an item
+
+```python
+@app.put('/item/{item_id}', response_model=Item, status_code=status.HTTP_200_OK)
+def update_an_item(item_id:int,item:Item):
+  item_to_update=db.query(models.Item).filter(models.Item.id==item_id).first()
+  item_to_update.name=item.name
+  item_to_update.price=item.price
+  item_to_update.description=item.description
+  item_to_update.on_offer=item.on_offer
+
+  db.commit()
+
+  return item_to_update
+```
+
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
