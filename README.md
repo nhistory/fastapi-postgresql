@@ -293,6 +293,21 @@ def update_an_item(item_id:int,item:Item):
   return item_to_update
 ```
 
+### 5. Delete an item
+
+```python
+@app.delete('/item/{item_id}')
+def delete_item(item_id:int):
+  item_to_delete=db.query(models.Item).filter(models.Item.id==item_id).first()
+
+  if item_to_delete is None:
+    raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail="Resource Not Found")
+  
+  db.delete(item_to_delete)
+  db.commit()
+  
+  return item_to_delete
+```
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
