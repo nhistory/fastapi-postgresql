@@ -6,6 +6,29 @@ An Restful API built with FastAPI and Postgresql connected by sqlalchemy.
 - Developed with minimal low-level web server able to use all async frameworks.
 - Import sqlalchemy, psycopg2-binary to use postgresql.
 
+## Table of Contents
+
+  * [Initialize project](#initialize-project)
+  * [uvicorn server](#uvicorn-server)
+  * [Create schema with pydantic](#create-schema-with-pydantic)
+  * [Type chech with Optional](#type-chech-with-optional)
+  * [Database setup](#database-setup)
+    + [1. sqlalchemy](#1-sqlalchemy)
+    + [2. psycopg2-binary](#2-psycopg2-binary)
+    + [3. Install postgresql](#3-install-postgresql)
+    + [4. Add database](#4-add-database)
+    + [5. Create Models](#5-create-models)
+    + [6. Create database](#6-create-database)
+  * [Make a CRUD API code](#make-a-crud-api-code)
+    + [1. Get all items](#1-get-all-items)
+    + [2. Post item](#2-post-item)
+    + [3. Get an item by usint item id](#3-get-an-item-by-usint-item-id)
+    + [4. Update an item](#4-update-an-item)
+    + [5. Delete an item](#5-delete-an-item)
+  * [Documentation of the API](#documentation-of-the-api)
+  * [References](#references)
+
+
 ## Initialize project
 
 This instruction is based on MacOS(UNIX) environment. If you are using Window, almost everything would be fine but you need to find additional materials.
@@ -70,7 +93,7 @@ You can check api PUT request by using [httpie](https://httpie.io/docs/cli/non-s
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177057217-19b70f03-3566-493a-929d-9f5bc18c4051.png">
 
-## Type chech with ```Optional```
+## Type chech with Optional
 
 Optional[...] is a shorthand notation for Union[..., None] , telling the type checker that either an object of the specific type is required, or None is required.
 
@@ -179,7 +202,7 @@ You can also find out ```Columns``` inside of ```item_db``` on the ```pgAdmin```
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/177226564-23d53cd4-fe6a-4932-b83c-09514c46aa46.png">
 
-## Made a CRUD API code
+## Make a CRUD API code
 
 Now, we can build up api setup with postgresql on the ```main.py```.
 
@@ -308,6 +331,19 @@ def delete_item(item_id:int):
   
   return item_to_delete
 ```
+
+## Documentation of the API
+
+Now we finish to build CRUD functionality by using FastAPI, sqlalchemy, postgresql. There are additional way to check API with FastAPI ```automatic doc``` and [Redoc](https://github.com/Redocly/redoc). Redoc is an open-source tool for generating documentation from OpenAPI (fka Swagger) definitions.
+
+localhost:8000/docs
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179360009-a30e84ea-6911-40aa-b3dd-1e7ae6618a59.png">
+
+localhost:8000/redoc
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179360023-f8fa7995-4ff7-4484-9aca-25baf8f95c09.png">
+
 
 ## References
 - https://www.youtube.com/watch?v=2g1ZjA6zHRo&t=168s
