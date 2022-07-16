@@ -46,9 +46,11 @@ def get_all_items():
 
   return items
 
-@app.get('/item/{item_id}')
+@app.get('/item/{item_id}', response_model=Item, status_code=status.HTTP_200_OK)
 def get_an_item(item_id:int):
-  pass
+  item=db.query(models.Item).filter(models.Item.id==item_id).first()
+
+  return item
 
 @app.post('/items', response_model=Item, status_code=status.HTTP_201_CREATED)
 def create_an_item(item:Item):
