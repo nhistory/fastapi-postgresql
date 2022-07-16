@@ -1,7 +1,7 @@
 # fastapi-postgresql
 
 ## Postgresql and FastAPI
-An API 
+An Restful API built with FastAPI and Postgresql connected by sqlalchemy.
 - Setted python virtual environment to make independent environment for development.
 - Developed with minimal low-level web server able to use all async frameworks.
 - Import sqlalchemy, psycopg2-binary to use postgresql.
@@ -262,6 +262,20 @@ def create_an_item(item:Item):
 After that, we can see warning message like below if any exist item try to be created.
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179121099-910a3170-c4e3-4fae-b0e5-a94dfca7679f.png">
+
+### 3. Get an item by usint item id
+
+```python
+@app.get('/item/{item_id}', response_model=Item, status_code=status.HTTP_200_OK)
+def get_an_item(item_id:int):
+  item=db.query(models.Item).filter(models.Item.id==item_id).first()
+
+  return item
+```
+
+We can get the specific item with item_id on the httpie.
+
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/39740066/179334779-f6bc7f4f-8a51-4da1-aab1-77ac83ef7e56.png">
 
 
 ## References
